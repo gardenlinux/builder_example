@@ -3,7 +3,7 @@
 set -euo pipefail
 
 mkdir -p /etc/kernel
-echo "root=LABEL=ROOT ro" > /etc/kernel/cmdline
+echo "console=ttyS0 root=LABEL=ROOT ro" > /etc/kernel/cmdline
 
 mkdir -p /boot/efi/Default
 
