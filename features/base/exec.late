@@ -19,7 +19,11 @@ DRACUT_COMPRESS_XZ="$(command -v xz)" dracut \
 --reproducible \
 "/boot/initrd.img-$version"
 
-kernel-install add "$version" "$kernel"
+if ! command -v python3 > /dev/null; then
+	mkdir -p /etc/kernel/install.d
+	ln -s /usr/bin/true /etc/kernel/install.d/60-ukify.install
+fi
+SYSTEMD_ESP_PATH=/boot/efi kernel-install --verbose --entry-token literal:Default add "$version" "$kernel"
 
 sed 's/boot\/efi\///' -i /boot/efi/loader/entries/*.conf
 
